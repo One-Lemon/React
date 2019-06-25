@@ -1,8 +1,16 @@
+import  { GETLIST } from './actionTypes';
 const initState = {
-  list: []
+  inputVal: '',
+  TodoList: [
+    { id: 1, todo: '吃饭' }
+  ]
 }
 
+
 export default (state = initState, action) => {
-  console.log('进入reducer');
-  return state;
+  let newState = JSON.parse(JSON.stringify(state));
+  if (action.type === GETLIST) {
+    newState.TodoList = action.data;
+  }
+  return newState;
 }
