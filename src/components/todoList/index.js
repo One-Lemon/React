@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Input, Button, List } from 'antd';
 import { TodoListWrap, TodoInput } from './style';
-import { getList } from '@/store/actionCreate';
+import { chgInput, addTodo, delTodo } from '@/store/actionCreate';
 import store from '@/store';
 
 export default class App extends Component {
@@ -18,26 +18,47 @@ export default class App extends Component {
       })
     });
   }
-  componentDidMount () {
-    fetch('http://localhost:3003/todoList')
-    .then(response => response.json())
-    .then(res => {
-      store.dispatch(getList(res));
-    })
+  chgInput = (e) => {
+    let value = e.target.value;
+    store.dispatch(chgInput(value));
   }
+  add = () => {
+    if (this.state.inputVal.trim() === '') {
+      return;
+    }
+    store.dispatch(addTodo());
+  }
+  enter = (e) => {
+    if (e.keyCode === 13) {
+      this.add();
+    }
+  }
+  del (id) {
+    store.dispatch(delTodo(id));
+  }
+  // componentDidMount () {
+  //   fetch('http://localhost:3003/todoList')
+  //   .then(response => response.json())
+  //   .then(res => {
+  //     store.dispatch(getList(res));
+  //   })
+  // }
   render() {
-    let { TodoList } = this.state;
+    let { TodoList, inputVal } = this.state;
     return (
       <TodoListWrap>
-        <h1>TodoList 组件</h1>
+        <h1 style={{ textAlign: 'center' }}>TodoList 组件</h1>
         <TodoInput>
-          <Input/>
-          <Button type="danger" >Click</Button>
+          <Input value={ inputVal } onChange={ this.chgInput } onKeyUp={ this.enter }/>
+          <Button type="primary" onClick={ this.add }>Click</Button>
         </TodoInput>
         <List
           dataSource={ TodoList }
           renderItem={ item => (
-            <List.Item key={ item.id }>{ item.todo }</List.Item>
+            <List.Item key={ item.id }>
+              { item.todo }
+              <Button type="danger" size="small" style={{float:'right' }} onClick={ this.del.bind(this, item.id) }>Del</Button>
+            </List.Item>
           )}
         />
       </TodoListWrap>
