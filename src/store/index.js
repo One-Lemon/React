@@ -1,3 +1,6 @@
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
+import todoReducer from '../views/TodoList/store/reducer';
 
-export default createStore();
+export default createStore(combineReducers({
+  todo: todoReducer
+}));
