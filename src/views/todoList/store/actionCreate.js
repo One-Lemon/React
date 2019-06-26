@@ -1,7 +1,7 @@
-import { GETLIST, CHGINPUT, ADDTODO, DELTODO } from './actionTypes';
-export const getList = (data) => {
+import { GETTODOLIST, CHGINPUT, ADDTODO, DELTODO } from './actionTypes';
+export const getTodoist = (data) => {
   return {
-    type: GETLIST,
+    type: GETTODOLIST,
     data
   }
 }

@@ -1,15 +1,13 @@
-import  { GETLIST, CHGINPUT, ADDTODO, DELTODO } from './actionTypes';
+import  { GETTODOLIST, CHGINPUT, ADDTODO, DELTODO } from './actionTypes';
 const initState = {
   inputVal: '',
-  TodoList: [
-    { id: 1, todo: '吃饭' }
-  ]
+  TodoList: []
 }
 
 export default (state = initState, action) => {
   let newState = JSON.parse(JSON.stringify(state));
   switch (action.type) {
-    case GETLIST:
+    case GETTODOLIST:
       newState.TodoList = action.data;
       break;
     case CHGINPUT:
@@ -17,7 +15,7 @@ export default (state = initState, action) => {
       break;
     case ADDTODO:
       let last = newState.TodoList.length;
-      let id = newState.TodoList[last] + 1;
+      let id = last === 0 ? 1 : newState.TodoList[last-1].id + 1;
       let todo = {
         id,
         todo: newState.inputVal

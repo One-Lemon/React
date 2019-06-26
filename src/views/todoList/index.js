@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Input, Button, List } from 'antd';
 import { TodoListWrap, TodoInput } from './style';
-import { chgInput, addTodo, delTodo } from '@/store/actionCreate';
+import { chgInput, addTodo, delTodo } from './store/actionCreate';
 import store from '@/store';
 
 export default class App extends Component {
